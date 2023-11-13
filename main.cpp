@@ -7,13 +7,11 @@
 
 int main(void)
 {
-    int hero_x = 10;
-    int hero_y = 10;
+    float hero_x = 10;
+    float hero_y = 10;
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
-    SetTargetFPS(60);
-
-    // Texture2D texture = LoadTexture(ASSETS_PATH "test.jpg"); // Check README.md for how this works
+    // SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
@@ -21,22 +19,22 @@ int main(void)
         // user input
         if (IsKeyDown(KEY_RIGHT))
         {
-            hero_x++;
+            hero_x += GetFrameTime();
         }
 
         if (IsKeyDown(KEY_LEFT))
         {
-            hero_x--;
+            hero_x -= GetFrameTime();
         }
 
         if (IsKeyDown(KEY_UP))
         {
-            hero_y--;
+            hero_y -= GetFrameTime();
         }
 
         if (IsKeyDown(KEY_DOWN))
         {
-            hero_y++;
+            hero_y += GetFrameTime();
         }
 
         // render the window
@@ -44,15 +42,11 @@ int main(void)
 
         ClearBackground(RAYWHITE);
 
-        // const int texture_x = SCREEN_WIDTH / 2 - texture.width / 2;
-        // const int texture_y = SCREEN_HEIGHT / 2 - texture.height / 2;
-        // DrawTexture(texture, texture_x, texture_y, WHITE);
-
         const char *text = "@";
         const Vector2 text_size = MeasureTextEx(GetFontDefault(), text, 20, 1);
         DrawText(text, hero_x * text_size.x, hero_y * text_size.y, 20, BLACK);
 
-        const char *position_text = TextFormat("x: %d, y: %d", hero_x, hero_y);
+        const char *position_text = TextFormat("x: %f, y: %f\nfps: %d", hero_x, hero_y, GetFPS());
         DrawText(position_text, 2, 2, 20, DARKGRAY);
         EndDrawing();
         // end render
