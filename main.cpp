@@ -7,6 +7,9 @@
 
 int main(void)
 {
+    int hero_x = 10;
+    int hero_y = 10;
+
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
 
@@ -14,6 +17,27 @@ int main(void)
 
     while (!WindowShouldClose())
     {
+
+        // user input
+        if (IsKeyDown(KEY_RIGHT))
+        {
+            hero_x++;
+        }
+
+        if (IsKeyDown(KEY_LEFT))
+        {
+            hero_x--;
+        }
+
+        if (IsKeyDown(KEY_UP))
+        {
+            hero_y--;
+        }
+
+        if (IsKeyDown(KEY_DOWN))
+        {
+            hero_y++;
+        }
 
         // render the window
         BeginDrawing();
@@ -26,8 +50,10 @@ int main(void)
 
         const char *text = "@";
         const Vector2 text_size = MeasureTextEx(GetFontDefault(), text, 20, 1);
-        DrawText(text, SCREEN_WIDTH / 2 - text_size.x / 2, SCREEN_HEIGHT / 2 - text_size.y / 2, 20, BLACK);
+        DrawText(text, hero_x * text_size.x, hero_y * text_size.y, 20, BLACK);
 
+        const char *position_text = TextFormat("x: %d, y: %d", hero_x, hero_y);
+        DrawText(position_text, 2, 2, 20, DARKGRAY);
         EndDrawing();
         // end render
     }
